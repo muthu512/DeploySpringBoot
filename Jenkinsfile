@@ -18,11 +18,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Define the destination folder on your Windows machine
                 script {
-                    def destinationFolder = 'C:\\Users\\Dell-Lap\\Downloads\\New folder'
-                    // Copy the JAR file to the specific folder
-                    bat "copy target\\*.jar ${destinationFolder}\\"
+                    bat 'copy target\\*.jar "C:\\Users\\Dell-Lap\\Downloads\\New folder\\"'
                 }
             }
         }
@@ -37,3 +34,4 @@ pipeline {
         }
     }
 }
+
