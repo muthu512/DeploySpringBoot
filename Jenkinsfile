@@ -1,17 +1,17 @@
 pipeline {
-    agent any
+    agent any 
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                // Clone your GitHub repository
-                git url: 'https://github.com/muthu512/DeploySpringBoot.git', branch: 'master'
+                // Checkout your code
+                git 'https://github.com/muthu512/DeploySpringBoot.git'
             }
         }
 
         stage('Build') {
             steps {
-                // Build the project using Maven
+                // Build the application
                 bat 'mvn clean package -DskipTests'
             }
         }
@@ -19,22 +19,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Set the path to the JAR file
-                    def jarFile = "C:\\Users\\Dell-Lap\\Downloads\\spring-boot-hello-world-main\\spring-boot-hello-world-main\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
+                    // Define the JAR file path
+                    def jarFile = "C:\\Users\\Dell-Lap\\.jenkins\\workspace\\DeploySpringBoot\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
 
-                    // Run the JAR directly from the target folder with specified port
-                    bat "java -jar ${jarFile} --server.port=1010"
+                    // Change the working directory and run the JAR from the target folder
+                    dir('C:\\Users\\Dell-Lap\\Downloads\\Newfolder') {
+                        bat "start java -jar ${jarFile} --server.port=1010"
+                    }
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed.'
         }
     }
 }
