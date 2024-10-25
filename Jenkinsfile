@@ -12,17 +12,18 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the project using Maven
-                sh 'mvn clean package'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Deploy') {
             steps {
-                // Define the destination folder on your Windows machine
                 script {
-                    def destinationFolder = 'C:\\Users\\Dell-Lap\\Downloads\\New folder'
-                    // Copy the JAR file to the specific folder
-                    bat "copy target\\*.jar ${destinationFolder}\\"
+                    // Set the path to the JAR file
+                    def jarFile = "C:\\Users\\Dell-Lap\\Downloads\\spring-boot-hello-world-main\\spring-boot-hello-world-main\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
+
+                    // Run the JAR directly from the target folder
+                    bat "java -jar ${jarFile}"
                 }
             }
         }
