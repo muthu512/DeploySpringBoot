@@ -1,24 +1,45 @@
 pipeline {
     agent any
+
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git 'https://github.com/muthu512/DeploySpringBoot.git'
+                // Clone your GitHub repository
+                git url: 'https://github.com/muthu512/DeploySpringBoot.git', branch: 'master'
             }
         }
+
         stage('Build') {
             steps {
+                // Build the project using Maven
                 bat 'mvn clean package -DskipTests'
             }
         }
+
         stage('Deploy') {
             steps {
-                // Navigate to the target directory to run the JAR directly
-                dir('C:\\Users\\Dell-Lap\\Downloads\\Newfolder') {
-                    // Run the JAR file directly from the target folder
-                    bat 'start java -jar C:\\Users\\Dell-Lap\\.jenkins\\workspace\\DeploySpringBoot\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar --server.port=1010'
+                script {
+                    // Define paths
+                    def buildJar = "C:\\Users\\Dell-Lap\\.jenkins\\workspace\\DeploySpringBoot\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
+                    def deployFolder = "C:\\Users\\Dell-Lap\\Downloads\\Newfolder"
+                    def deployJar = "${deployFolder}\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
+
+                    // Copy the JAR to the specified deployment folder
+                    bat "copy /Y \"${buildJar}\" \"${deployJar}\""
+
+                    // Run the JAR directly from the deployment folder
+                    bat "java -jar \"${deployJar}\""
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed.'
         }
     }
 }
