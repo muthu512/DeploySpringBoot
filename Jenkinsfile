@@ -19,12 +19,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Set the deployment folder where the JAR is to be built
-                    def deployFolder = "C:\\Users\\Dell-Lap\\Downloads\\Newfolder"
-                    def jarFile = "${deployFolder}\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
-                    
-                    // Run the JAR directly from the deployment folder
-                    bat "java -jar ${jarFile}"
+                    // Run the JAR directly from the Newfolder
+                    bat "java -jar C:\\Users\\Dell-Lap\\Downloads\\Newfolder\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
                 }
             }
         }
