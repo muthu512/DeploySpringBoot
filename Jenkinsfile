@@ -23,7 +23,7 @@ pipeline {
                     def jarFile = "C:\\Users\\Dell-Lap\\Downloads\\spring-boot-hello-world-main\\spring-boot-hello-world-main\\target\\spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar"
 
                     // Run the JAR directly from the target folder with specified port
-                    bat "java -jar ${jarFile} --server.port=9090"
+                    bat "java -jar ${jarFile} --server.port=1010"
                 }
             }
         }
